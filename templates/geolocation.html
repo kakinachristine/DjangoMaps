@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Geolocation Example</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
+</head>
+<body>
+    <button onclick="getLocation()">Get Location</button>
+    <div id="map" style="width: 100%; height: 400px;"></div>
+
+    <script>
+    var map;
+
+    function initMap() {
+        var initialPosition = { lat: 0, lng: 0 };  // Default initial position
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: initialPosition,
+            zoom: 14
+        });
+    }
+
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            console.log("Geolocation is not supported by this browser.");
+        }
+    }
+
+    function showPosition(position) {
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+
+        // Update map's center to user's location
+        var userPosition = { lat: latitude, lng: longitude };
+        map.setCenter(userPosition);
+
+        // Add a marker for user's location
+        var marker = new google.maps.Marker({
+            position: userPosition,
+            map: map,
+            title: 'Your Location'
+        });
+    }
+    </script>
+    <script>
+        initMap();
+    </script>
+</body>
+</html>
